@@ -1,6 +1,6 @@
 {
-  "name": "motorola-datawedge-cordova-plugin-master",
-  "version": "0.1.0",
+  "name": "motorola-datawedge-cordova-plugin",
+  "version": "1.0.1",
   "description": "Cordova Motorola DataWedge Plugin ============",
   "cordova": {
     "id": "com.bluefletch.motorola",
