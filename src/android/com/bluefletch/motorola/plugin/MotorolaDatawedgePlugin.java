@@ -25,6 +25,7 @@ import java.util.List;
 import com.bluefletch.motorola.BarcodeScan;
 import com.bluefletch.motorola.DataWedgeIntentHandler;
 import com.bluefletch.motorola.ScanCallback;
+import com.bluefletch.motorola.RFIDScan;
 
 public class MotorolaDatawedgePlugin extends CordovaPlugin {
     
@@ -61,6 +62,31 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
         }
         else if ("scanner.unregister".equals(action)) {
             wedge.setScanCallback(null);
+            if (!wedge.hasListeners()) {
+                wedge.stop();
+            }
+        }
+        else if ("rfid.register".equals(action)) {
+            wedge.setRFIDCallback(new ScanCallback<RFIDScan>() {
+                @Override
+                public void execute(RFIDScan scan) {
+                    Log.i(TAG, "RFID result [" + scan.LabelType + "-" + scan.RFIDTag + "].");
+
+                    try {
+                        JSONObject obj = new JSONObject();
+                        obj.put("type", scan.LabelType);
+                        obj.put("tag", scan.RFIDTag);
+                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
+                        pluginResult.setKeepCallback(true);
+                        callbackContext.sendPluginResult(pluginResult);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error building json object", e);
+
+                    }
+                }
+            });
+        } else if ("rfid.unregister".equals(action)) {
+            wedge.setRFIDCallback(null);
             if (!wedge.hasListeners()) {
                 wedge.stop();
             }
@@ -106,7 +132,7 @@ public class MotorolaDatawedgePlugin extends CordovaPlugin {
 
 
         //start plugin now if not already started
-        if ("start".equals(action) || "magstripe.register".equals(action) || "scanner.register".equals(action)) {
+        if ("start".equals(action) || "magstripe.register".equals(action) || "scanner.register".equals(action) || "rfid.register".equals(action)) {
 
             //try to read intent action from inbound params
             String intentAction = null;

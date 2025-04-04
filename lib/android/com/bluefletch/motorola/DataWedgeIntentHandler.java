@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.bluefletch.motorola.BarcodeScan;
 import com.bluefletch.motorola.ScanCallback;
+import com.bluefletch.motorola.RFIDScan;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,6 +46,10 @@ public class DataWedgeIntentHandler {
         magstripeCallback = callback;
     }
 
+    protected ScanCallback<RFIDScan> rfidCallback;
+    public void setRFIDCallback(ScanCallback<RFIDScan> callback) {
+        rfidCallback = callback;
+    }
 
     public DataWedgeIntentHandler(Context context) {
         TAG = this.getClass().getSimpleName();
@@ -152,6 +157,17 @@ public class DataWedgeIntentHandler {
                     String labelType = intent.getStringExtra("com.motorolasolutions.emdk.datawedge.label_type");
 
                     scanCallback.execute(new BarcodeScan(labelType, barcode));
+
+                } else if ("rfid".equalsIgnoreCase(intent.getStringExtra("com.motorolasolutions.emdk.datawedge.source"))) {
+                    if (scanCallback == null) {
+                        Log.e(TAG, "RFID data received, but callback is null.");
+                        return;
+                    }
+                    String tag = intent.getStringExtra("com.motorolasolutions.emdk.datawedge.data_string");
+                    String labelType = intent.getStringExtra("com.motorolasolutions.emdk.datawedge.label_type");
+
+                    rfidCallback.execute(new RFIDScan(labelType, tag));  
+                                    
                 } else {
                     if (magstripeCallback == null) {
                         Log.e(TAG, "Magstripe data received, but callback is null.");

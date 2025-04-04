@@ -55,6 +55,14 @@ Special configuration for option 2:
            
            //TODO: handle barcode/label type
        });
+       datawedge.registerForRFID(function(data){
+           var tag  = data.tag;
+
+           console.log("RFID scanned.  Label tag number is: " + tag);
+           
+           //TODO: handle tag
+       });
+
        //This function will be passed an array with the read values for each track.  
        //NOTE: If a track could not be read, it will contain null
        datawedge.registerForMagstripe(function(tracks){
@@ -98,8 +106,11 @@ Special configuration for option 2:
 * Turn off the scanner manually using: `datawedge.stopScanner()`
 * Unregister for barcode scans by calling: `datawedge.unregisterBarcode()`
 
+<h5>RFID:</h5>
+* Unregister for RFID scans by calling: `datawedge.unregisterRFID()`
+
 <h5>Magstripe:</h5>
-* Unregister for barcode scans by calling: `datawedge.unregisterMagstripe()`
+* Unregister for magstripe scans by calling: `datawedge.unregisterMagstripe()`
 
 ==============
 Copyright 2014 BlueFletch Mobile

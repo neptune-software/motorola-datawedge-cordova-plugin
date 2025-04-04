@@ -61,6 +61,22 @@ DataWedge.prototype.unregisterBarcode = function () {
 };
 
 /**
+ * Register a callback for RFID events.  This function will be called when a tag are read
+ */
+DataWedge.prototype.registerForRFID = function (callback) {
+    
+    exec(callback, null, 'MotorolaDataWedge', 'rfid.register', []);
+};
+
+/**
+ * De-register a callback for RFID events.  
+ */
+DataWedge.prototype.unregisterRFID = function () {
+    
+    exec(null, null, 'MotorolaDataWedge', 'rfid.unregister', []);
+};
+
+/**
  * Register a callback for magstripe reads
  */
 DataWedge.prototype.registerForMagstripe = function (callback) {

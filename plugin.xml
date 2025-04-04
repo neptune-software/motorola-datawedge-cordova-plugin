@@ -26,6 +26,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             
         </config-file>
         <source-file src="lib/android/com/bluefletch/motorola/BarcodeScan.java" target-dir="src/com/bluefletch/motorola" />
+        <source-file src="lib/android/com/bluefletch/motorola/RFIDScan.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="lib/android/com/bluefletch/motorola/ScanCallback.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="lib/android/com/bluefletch/motorola/DataWedgeIntentHandler.java" target-dir="src/com/bluefletch/motorola" />
         <source-file src="src/android/com/bluefletch/motorola/plugin/MotorolaDatawedgePlugin.java" target-dir="src/com/bluefletch/motorola/plugin" />
